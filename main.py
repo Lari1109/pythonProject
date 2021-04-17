@@ -88,14 +88,9 @@ pressure_dict['sea_level']
 print("pressure: " + str(pressure_dict))
 
 summary = {"sunset": sunrset_iso, "sunrise":sunrise_iso}, temp_dict_celsius, wind_dict_in_meters_per_sec, {"rain": rain_dict}, pressure_dict, {"time": time}, {"city": cityname}
-#print(json.dumps(summary))
-
-#data = cityname
 
 # Test data
 data = json.dumps(summary)
-
-#print(data)
 
 
 def delivery_report(err, msg):
