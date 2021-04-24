@@ -4,7 +4,7 @@ from pyowm.utils.config import get_default_config_for_subscription_type
 from pyowm.utils import timestamps, formatting
 import json
 from confluent_kafka import Producer
-from config import conf
+from config import confluent_conf
 
 config_dict = get_default_config_for_subscription_type('free')
 owm = OWM('1a8b1d6e34be977e469e42517727e81b', config_dict)
@@ -44,6 +44,7 @@ weather = observation.weather
 weather.status           # short version of status (eg. 'Rain')
 time = weather.reference_time(timeformat='iso')
 print("timestamp: " + str(time))
+print(str(weather))
 
 
 
@@ -82,6 +83,9 @@ print("sunset: " + sunrset_iso)
 one_call.current.humidity
 print("humidity in %: " + str(one_call.current.humidity))
 
+one_call.current.clouds
+print("cloudiness in %: " + str(one_call.current.clouds))
+
 pressure_dict = observation.weather.pressure
 pressure_dict['press']
 pressure_dict['sea_level']
@@ -105,7 +109,7 @@ def delivery_report(err, msg):
 if __name__ == "__main__":
 
     # Create producer
-    producer = Producer(conf)
+    producer = Producer(confluent_conf)
 
     for msg in data.split():
         producer.produce("data_eng", msg.encode("utf-8"), callback=delivery_report)
